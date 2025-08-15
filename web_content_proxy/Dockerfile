@@ -1,14 +1,17 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-# Install Python and required packages
+# Install Python and system packages
 RUN apk add --no-cache \
     python3 \
-    py3-pip \
-    py3-flask \
-    py3-requests \
-    py3-lxml \
-    py3-beautifulsoup4
+    py3-pip
+
+# Install Python packages
+RUN pip3 install --no-cache-dir \
+    flask==2.3.3 \
+    requests==2.31.0 \
+    beautifulsoup4==4.12.2 \
+    lxml==4.9.3
 
 # Copy data
 COPY run.sh /

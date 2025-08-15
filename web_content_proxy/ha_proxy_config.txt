@@ -1,0 +1,32 @@
+name: "Web Content Proxy"
+description: "Web proxy to access content with CORS restrictions or X-Frame-Options headers"
+version: "1.0.0"
+slug: "web_content_proxy"
+init: false
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+startup: services
+boot: manual
+options:
+  port: 8099
+  ssl: false
+  certfile: fullchain.pem
+  keyfile: privkey.pem
+  allowed_domains: []
+  max_content_size: 10485760
+  timeout: 30
+schema:
+  port: port
+  ssl: bool
+  certfile: str
+  keyfile: str
+  allowed_domains: [str]
+  max_content_size: int(1,52428800)?
+  timeout: int(5,300)?
+ports:
+  8099/tcp: null
+webui: "http://[HOST]:[PORT:8099]"

@@ -5,18 +5,25 @@ PORT=$(bashio::config 'port')
 SSL=$(bashio::config 'ssl')
 CERTFILE=$(bashio::config 'certfile')
 KEYFILE=$(bashio::config 'keyfile')
-ALLOWED_DOMAINS=$(bashio::config 'allowed_domains')
 MAX_CONTENT_SIZE=$(bashio::config 'max_content_size')
 TIMEOUT=$(bashio::config 'timeout')
 
+# Handle allowed_domains array properly
+ALLOWED_DOMAINS_JSON="[]"
+if bashio::config.has_value 'allowed_domains'; then
+    ALLOWED_DOMAINS_JSON=$(bashio::config 'allowed_domains' | jq -c .)
+fi
+
 bashio::log.info "Starting Web Content Proxy on port ${PORT}"
+bashio::log.info "SSL enabled: ${SSL}"
+bashio::log.info "Allowed domains: ${ALLOWED_DOMAINS_JSON}"
 
 # Export configuration as environment variables
 export PROXY_PORT="$PORT"
 export PROXY_SSL="$SSL"
 export PROXY_CERTFILE="$CERTFILE"
 export PROXY_KEYFILE="$KEYFILE"
-export PROXY_ALLOWED_DOMAINS="$ALLOWED_DOMAINS"
+export PROXY_ALLOWED_DOMAINS="$ALLOWED_DOMAINS_JSON"
 export PROXY_MAX_CONTENT_SIZE="$MAX_CONTENT_SIZE"
 export PROXY_TIMEOUT="$TIMEOUT"
 

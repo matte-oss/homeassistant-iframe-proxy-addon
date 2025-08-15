@@ -28,5 +28,12 @@ schema:
   max_content_size: int(1,52428800)?
   timeout: int(5,300)?
 ports:
-  8099/tcp: null
+  8099/tcp: 8099
+ports_description:
+  8099/tcp: "Web proxy interface"
+ingress: true
+ingress_port: 8099
+ingress_entry: "/"
 webui: "http://[HOST]:[PORT:8099]"
+panel_icon: mdi:web
+panel_title: "Web Proxy"
